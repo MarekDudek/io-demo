@@ -26,3 +26,29 @@ readyDialog =
        if r 
           then putStrLn "Great to hear that!"
           else putStrLn "Sorry to hear that"
+
+myGetLine :: IO String
+myGetLine = 
+    do c <- getChar
+       if c == '\n'
+        then return ""
+        else 
+            do l <- myGetLine
+               return (c:l)
+
+helloDialog :: IO ()
+helloDialog = 
+    do putStr "Enter your name: "
+       name <- getLine
+       putStrLn $ "Hello " ++ name ++ "!"
+
+todoList :: [IO ()]
+todoList = [
+    putChar 'a',
+    do putChar 'b'
+       putChar 'c',
+    do c <- getChar
+       putChar c
+  ]
+
+doTodos = sequence_ todoList

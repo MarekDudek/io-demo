@@ -1,0 +1,6 @@
+
+Each do introduces a single chain of statements. Any intervening construct, such as the if, must use a new do to initiate further sequences of actions.
+
+Debugging packages (like Trace) often make liberal use of these `forbidden functions' in an entirely safe manner.
+
+do x;y is expanded to x >> y
