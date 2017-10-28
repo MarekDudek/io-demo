@@ -4,3 +4,7 @@ Each do introduces a single chain of statements. Any intervening construct, such
 Debugging packages (like Trace) often make liberal use of these `forbidden functions' in an entirely safe manner.
 
 do x;y is expanded to x >> y
+
+
+how to force IO error?
+how to handle errors better. problem with this unknow type of exception
