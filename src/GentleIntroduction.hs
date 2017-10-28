@@ -6,6 +6,8 @@ import Control.Exception
 import System.IO
 import System.IO.Error
 
+-- Basic I/O Operations
+
 getAndPutChar :: IO ()
 getAndPutChar = 
     do  c <- getChar
@@ -57,8 +59,11 @@ todoList = [
        putChar c
   ]
 
+-- Programming With Actions
+
 doTodos = sequence_ todoList
 
+-- Exception Handling
 
 getInt :: IO Int
 getInt = 
@@ -90,3 +95,36 @@ getIntDialog4 =
     do putStr "Enter number: "
        getInt `catch` handler
        where handler e = if isEOFError e then return 0 else return 1
+
+-- Files, Channels and Handles
+
+doSthWithFile :: IO ()
+doSthWithFile =
+    do handle <- openFile "test/some-file.txt" ReadMode
+       putStrLn $ show handle
+       c <- hGetChar handle
+       putStrLn $ show c
+       contents <- hGetContents handle
+       putStr contents
+       hClose handle
+       return ()
+
+writeToFile :: FilePath -> IO ()
+writeToFile p = 
+    do h <- openFile "test/test.txt" WriteMode
+       hPutChar h 'a'
+       hPutStrLn h ""
+       hPutStr h "this is a line of text"
+       hPutChar h '\n'
+       hClose h
+       return ()
+
+fromFileOrDefault :: FilePath -> IO ()
+fromFileOrDefault path = (
+    do h <- openFile path ReadMode
+       c <- hGetContents h
+       putStr c
+    ) `catch` defaultValue
+    where      
+          defaultValue :: IOError -> IO ()
+          defaultValue e = putStrLn $ displayException e
